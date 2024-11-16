@@ -2,11 +2,21 @@ package org.example.dbfeditorapp;
 
 import com.linuxense.javadbf.DBFReader;
 import com.linuxense.javadbf.DBFField;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
+
 public class DBFInfoExtractor {
+
+
     public void getInfoColumn(String dbfFilePath) {
         // Укажите путь к вашему DBF файлу
         //String dbfFilePath = "C024302.dbf";

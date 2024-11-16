@@ -12,6 +12,11 @@ module org.example.dbfeditorapp {
     requires com.almasb.fxgl.all;
     requires javadbf;
 
+    requires com.sun.jna;
+    requires com.sun.jna.platform;
+    requires java.desktop;
+    requires javafx.swing;
+
     opens org.example.dbfeditorapp to javafx.fxml;
     exports org.example.dbfeditorapp;
 }

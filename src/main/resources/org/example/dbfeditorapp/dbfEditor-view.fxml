@@ -24,6 +24,7 @@
             <Font name="Wingdings 2" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="chooseFileButton" layoutX="126.0" layoutY="273.0" mnemonicParsing="false" prefWidth="94.0" text="Выбрать файл" />
+      <Button fx:id="chooseFileButton" layoutX="175.0" layoutY="270.0" mnemonicParsing="false" prefWidth="94.0" text="Выбрать файл" />
+      <Button fx:id="openFileButton" layoutX="69.0" layoutY="270.0" mnemonicParsing="false" prefWidth="94.0" text="Открыть файл" />
    </children>
 </AnchorPane>
