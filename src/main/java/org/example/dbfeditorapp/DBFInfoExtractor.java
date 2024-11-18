@@ -3,18 +3,16 @@ package org.example.dbfeditorapp;
 import com.linuxense.javadbf.DBFException;
 import com.linuxense.javadbf.DBFReader;
 import com.linuxense.javadbf.DBFField;
+import com.linuxense.javadbf.DBFWriter;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-import java.io.File;
 import java.util.ArrayList;
 
 public class DBFInfoExtractor {
@@ -76,5 +74,9 @@ public class DBFInfoExtractor {
         finally {
             return columnNames;
         }
+    }
+    public static void saveFilteredFile(String dbfFilePath, String newDbfFilePath) {
+        List columnIndices= (List)EditorWindow.getSelectedRows();
+
     }
 }

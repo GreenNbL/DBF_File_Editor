@@ -44,7 +44,8 @@ public class FileOpenner {
         } else {
             //DBFInfoExtractor dbfInfoExtractor = new DBFInfoExtractor();
             //dbfInfoExtractor.getInfoColumn(filePath);
-            EditorWindow.openNewWindow(primaryStage, filePath);
+            EditorWindow editorWindow=new EditorWindow(primaryStage, filePath);
+            editorWindow.openNewWindow();
         }
     }
     private void openFileArea(DragEvent event) {
