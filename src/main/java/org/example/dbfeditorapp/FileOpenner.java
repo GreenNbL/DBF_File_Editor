@@ -42,9 +42,9 @@ public class FileOpenner {
         if (!isValidFileExtension(filePath)) {
             showAlert(primaryStage,"Недопустимое расширение файла", "Пожалуйста, выберите файл с расширением .dbf");
         } else {
-            DBFInfoExtractor dbfInfoExtractor = new DBFInfoExtractor();
-            dbfInfoExtractor.getInfoColumn(filePath);
-
+            //DBFInfoExtractor dbfInfoExtractor = new DBFInfoExtractor();
+            //dbfInfoExtractor.getInfoColumn(filePath);
+            EditorWindow.openNewWindow(primaryStage, filePath);
         }
     }
     private void openFileArea(DragEvent event) {

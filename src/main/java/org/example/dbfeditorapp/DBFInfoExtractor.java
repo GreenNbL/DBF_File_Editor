@@ -1,5 +1,6 @@
 package org.example.dbfeditorapp;
 
+import com.linuxense.javadbf.DBFException;
 import com.linuxense.javadbf.DBFReader;
 import com.linuxense.javadbf.DBFField;
 import javafx.embed.swing.SwingFXUtils;
@@ -8,19 +9,38 @@ import javafx.scene.image.Image;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
+import java.util.ArrayList;
 
 public class DBFInfoExtractor {
 
+    public static int getAmountOfColumns(String dbfFilePath)
+    {
+        int numberOfFields=0;
+        try
+        {
+            DBFReader reader = new DBFReader(new FileInputStream(dbfFilePath));
+            numberOfFields = reader.getFieldCount(); // Получаем количество поле
+        }
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (DBFException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            return numberOfFields;
+        }
+    }
 
-    public void getInfoColumn(String dbfFilePath) {
+    public static ArrayList<String> getInfoColumn(String dbfFilePath) {
         // Укажите путь к вашему DBF файлу
         //String dbfFilePath = "C024302.dbf";
-
+        ArrayList<String> columnNames = new ArrayList<String>();
         char[] typeMapping = new char[256]; // Предположим, что кодов не более 255
         typeMapping[67] = 'C'; // Character
         typeMapping[68] = 'D'; // Date
@@ -42,14 +62,19 @@ public class DBFInfoExtractor {
                 if (fieldType == 'N') {
                     int fieldDecimals = field.getDecimalCount(); // Количество знаков после запятой
                     // Форматируем вывод для числовых полей
-                    System.out.println(fieldName + "," + fieldType + "," + fieldLength + "," + fieldDecimals);
+                    columnNames.add(fieldName + "," + fieldType + "," + fieldLength + "," + fieldDecimals);
+                    //System.out.println(fieldName + "," + fieldType + "," + fieldLength + "," + fieldDecimals);
                 } else {
+                    columnNames.add(fieldName + "," + fieldType + "," + fieldLength);
                     // Для остальных типов
-                    System.out.println(fieldName + "," + fieldType + "," + fieldLength);
+                    //System.out.println(fieldName + "," + fieldType + "," + fieldLength);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace(); // Обработка ошибок ввода-вывода
+        }
+        finally {
+            return columnNames;
         }
     }
 }
