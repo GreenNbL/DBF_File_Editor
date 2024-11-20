@@ -10,32 +10,37 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.DirectoryChooser;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.example.dbfeditorapp.DBFInfoExtractor.saveFilteredDBFFile;
 
 public class EditorWindow {
     private static TableView<Item> table;
     private String fileAdress;
-    private  Stage newStage;
+    private  Stage owner;
     public EditorWindow(Stage owner, String fileAdress)
     {
         this.fileAdress = fileAdress;
-        newStage = owner;
+        this.owner = owner;
     }
     public void openNewWindow() {
-
+        Stage newStage = new Stage(); // Создание нового окна
         // Создание нового окна
         newStage.setTitle("Новое окно");
 
         // Устанавливаем модальность, чтобы заблокировать главное окно
         newStage.initModality(Modality.APPLICATION_MODAL);
-        newStage.initOwner(newStage);
+        newStage.initOwner(owner);
         // Создание кнопок
         Button saveAsButton = new Button("Сохранить как");
-        //saveAsButton.setOnAction(e -> saveSelectedItems(tableView));
+        saveAsButton.setOnAction(e -> saveSelectedItems(fileAdress));
         Button closeButton = new Button("Закрыть");
         closeButton.setOnAction(e -> newStage.close());
 
@@ -48,10 +53,35 @@ public class EditorWindow {
 
         newStage.setScene(new Scene(layout, 400, 300));
 
-        saveAsButton.setOnAction(e -> getSelectedRows());
+
         // Показать новое окно
         newStage.showAndWait();
 
+    }
+    public static void saveSelectedItems(String fileAdress) {
+        // Создаем DirectoryChooser для выбора директории
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Сохранить DBF файл");
+        // Открыть диалог выбора файла и установить имя файла по умолчанию
+        File defaultFile = new File(fileAdress);
+        fileChooser.setInitialFileName(getFileNameWithoutExtension(defaultFile.getName())+"(2)");
+        fileChooser.setInitialDirectory(defaultFile.getParentFile());
+        // Показываем диалог для сохранения файла
+        File fileToSave = fileChooser.showSaveDialog(null);
+        if (fileToSave != null) {
+            fileToSave = new File(fileToSave.getAbsolutePath()+ ".dbf");
+            // Вызов вашей функции для сохранения DBF файла
+            saveFilteredDBFFile(fileAdress, fileToSave.getAbsolutePath());
+        }
+    }
+    private static String getFileNameWithoutExtension(String fileName) {
+        // Находим индекс последней точки
+        int index = fileName.lastIndexOf('.');
+        // Если точка найдена, возвращаем подстроку до точки; иначе возвращаем полное имя файла
+        if (index > 0) {
+            return fileName.substring(0, index);
+        }
+        return fileName; // Если нет расширения, возвращаем полное имя
     }
     public static List<Integer> getSelectedRows() {
         List<Integer> selectedIndices = new ArrayList<>();
