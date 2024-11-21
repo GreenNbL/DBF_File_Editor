@@ -11,7 +11,7 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("dbfEditor-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 350, 350);
-        stage.setTitle("Hello!");
+        stage.setTitle("DBF Editor");
         stage.setScene(scene);
         stage.show();
 

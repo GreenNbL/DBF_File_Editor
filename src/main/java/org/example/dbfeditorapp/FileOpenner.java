@@ -39,13 +39,19 @@ public class FileOpenner {
         dropArea.setOnDragDropped(event -> openFileArea(event));
     }
     private void openFile() {
-        if (!isValidFileExtension(filePath)) {
-            showAlert(primaryStage,"Недопустимое расширение файла", "Пожалуйста, выберите файл с расширением .dbf");
-        } else {
-            //DBFInfoExtractor dbfInfoExtractor = new DBFInfoExtractor();
-            //dbfInfoExtractor.getInfoColumn(filePath);
-            EditorWindow editorWindow=new EditorWindow(primaryStage, filePath);
-            editorWindow.openNewWindow();
+        if(filePath==null)
+        {
+            showAlert(primaryStage,"Файл не выбран", "Пожалуйста, выберите файл с расширением .dbf");
+        }
+        else {
+            if (!isValidFileExtension(filePath)) {
+                showAlert(primaryStage, "Недопустимое расширение файла", "Пожалуйста, выберите файл с расширением .dbf");
+            } else {
+                //DBFInfoExtractor dbfInfoExtractor = new DBFInfoExtractor();
+                //dbfInfoExtractor.getInfoColumn(filePath);
+                EditorWindow editorWindow = new EditorWindow(primaryStage, filePath);
+                editorWindow.openNewWindow();
+            }
         }
     }
     private void openFileArea(DragEvent event) {
